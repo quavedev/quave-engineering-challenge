@@ -23,7 +23,7 @@ Start both servers with one command from the repository root:
 bin/dev
 ```
 
-Open http://127.0.0.1:5173. Rails runs on port 3000 and Vite forwards `/api` requests to it. Press Ctrl+C to stop both servers. If either server exits, the launcher stops the other too. Run `bin/setup` once before the first launch; `bin/dev` prepares the local development database automatically.
+Both servers bind to `0.0.0.0`. Open `http://<server-ip>:5173` from another device, or http://127.0.0.1:5173 locally. Rails runs on port 3000 and Vite forwards `/api` requests to it. Press Ctrl+C to stop both servers. If either server exits, the launcher stops the other too. Run `bin/setup` once before the first launch; `bin/dev` prepares the local development database automatically.
 
 Node is used for frontend tooling; the backend application is Rails.
 

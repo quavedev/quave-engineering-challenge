@@ -36,7 +36,7 @@ trap("TERM") { exit 143 }
 begin
   [3000, 5173].each do |port|
     begin
-      TCPServer.new("127.0.0.1", port).close
+      TCPServer.new("0.0.0.0", port).close
     rescue Errno::EADDRINUSE
       abort "Port #{port} is already in use. Stop its server before running bin/dev."
     end
@@ -51,10 +51,10 @@ begin
     abort "Could not prepare the local database. Check the error above."
   end
 
-  puts "Starting Rails and React. Open http://127.0.0.1:5173"
+  puts "Starting Rails and React on 0.0.0.0. Open http://<server-ip>:5173"
   puts "Press Ctrl+C to stop both servers."
   $stdout.flush
-  children << Process.spawn("bundle", "exec", "rails", "server", "-b", "127.0.0.1", "-p", "3000", chdir: "backend", pgroup: true)
+  children << Process.spawn("bundle", "exec", "rails", "server", "-b", "0.0.0.0", "-p", "3000", chdir: "backend", pgroup: true)
   children << Process.spawn("npm", "run", "dev", "--", "--strictPort", chdir: "frontend", pgroup: true)
   pid, status = Process.wait2
   warn "A development server exited (PID #{pid}); stopping both servers."
