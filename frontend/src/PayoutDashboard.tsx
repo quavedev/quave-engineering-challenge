@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { usePayouts } from './usePayouts';
+import { PayoutFeePreview } from './PayoutFeePreview';
 import type { StatusFilter } from './types';
 
 export function PayoutDashboard() {
@@ -27,5 +28,6 @@ export function PayoutDashboard() {
           onClick={() => void view.send(row.payoutId)}>Send payout {row.payoutId}</button></td>
       </tr>)}</tbody>
     </table>}
+    {!view.loading && <PayoutFeePreview payouts={view.rows} />}
   </main>;
 }
