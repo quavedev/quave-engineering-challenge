@@ -2,7 +2,13 @@
 
 A fictional merchant payout dashboard with a Rails JSON API, SQLite records, and a React/TypeScript frontend. The payment provider is a local fake. No bank account, API keys, or paid services are required.
 
-Candidates choose either the Rails backend track or the React/TypeScript frontend track with a small Rails change. The invitation includes a candidate-specific prompt and proposed patch for each track. Choose one track and start with those materials. Use the exact commit in your invitation, apply only the patch for your chosen track, and review the change using your preferred coding agent.
+## Choose a proposed implementation
+
+Your invitation links to an open pull request for each offered track. Choose one: the Rails backend or React/TypeScript frontend. Each PR contains the original engineering request, proposed AI-assisted implementation, exact starting commit, and review instructions. Work from that PR's pinned head commit, not from `main`. The proposed changes pass their supplied checks but still require your review and verification.
+
+Browse the [open proposed implementations](https://github.com/quavedev/quave-engineering-challenge/pulls). Use the PR assigned in your invitation; other proposals are independent variations. This is a fictional exercise with no real money movement.
+
+Use your preferred coding agent to investigate the change, reproduce important failures, make focused fixes, and explain your verification. Keep your findings and completed solution private and return them using your invitation's instructions. Leave the proposed PR open; do not publish your answer as a review, comment, or solution PR.
 
 ## Setup
 
