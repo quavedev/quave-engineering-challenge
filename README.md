@@ -2,7 +2,7 @@
 
 A fictional merchant payout dashboard with a Rails JSON API, SQLite records, and a React/TypeScript frontend. The payment provider is a local fake. No bank account, API keys, or paid services are required.
 
-Candidates choose either the Rails backend track or the React/TypeScript frontend track with a small Rails change. After choosing, they receive an individual task prompt and proposed patch by email. Use the exact commit in your invitation, apply only the patch for your chosen track, and review the change using your preferred coding agent.
+Candidates choose either the Rails backend track or the React/TypeScript frontend track with a small Rails change. The invitation includes a candidate-specific prompt and proposed patch for each track. Choose one track and start with those materials. Use the exact commit in your invitation, apply only the patch for your chosen track, and review the change using your preferred coding agent.
 
 ## Setup
 
