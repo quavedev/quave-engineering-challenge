@@ -3,6 +3,8 @@ module Api
     def index
       payouts = Payout.where(merchant_id: params[:merchant_id])
       payouts = payouts.where(status: params[:status]) if params[:status].present?
+      fresh_when(etag: payouts, last_modified: payouts.maximum(:updated_at), public: false)
+      return if performed?
       render json: payouts.order(:payout_id).map(&:api_payload)
     end
 
