@@ -17,19 +17,15 @@ bin/test
 
 Setup downloads dependencies and creates local SQLite development and test databases. After setup, the exercise runs locally without external services. Count exercise time after setup succeeds. Contact us if setup fails.
 
-For the dashboard, run these in separate terminals:
+Start both servers with one command from the repository root:
 
 ```sh
-cd backend
-bundle exec rails server -b 127.0.0.1 -p 3000
+bin/dev
 ```
 
-```sh
-cd frontend
-npm run dev
-```
+Open http://127.0.0.1:5173. Rails runs on port 3000 and Vite forwards `/api` requests to it. Press Ctrl+C to stop both servers. If either server exits, the launcher stops the other too. Run `bin/setup` once before the first launch; `bin/dev` prepares the local development database automatically.
 
-Open http://127.0.0.1:5173. Vite forwards `/api` requests to Rails on port 3000. Node is used for frontend tooling; the backend application is Rails.
+Node is used for frontend tooling; the backend application is Rails.
 
 Seed data includes Cedar and Maple, with overlapping merchant-local payout IDs. Database preparation seeds the development database. To restore the demo, stop Rails and run `bundle exec rails db:reset` inside `backend`, then start Rails again. This resets only the local challenge database.
 

@@ -1,0 +1,70 @@
+#!/usr/bin/env ruby
+require "socket"
+
+Dir.chdir(File.expand_path("..", __dir__))
+children = []
+
+# Each server has its own process group so npm's Vite child is stopped too.
+def stop_servers(children)
+  children.each do |pid|
+    Process.kill("TERM", -pid)
+  rescue Errno::ESRCH
+  end
+  deadline = Process.clock_gettime(Process::CLOCK_MONOTONIC) + 3
+  loop do
+    alive = children.select do |pid|
+      Process.kill(0, -pid)
+      true
+    rescue Errno::ESRCH
+      false
+    end
+    break if alive.empty? || Process.clock_gettime(Process::CLOCK_MONOTONIC) >= deadline
+    sleep 0.05
+  end
+  children.each do |pid|
+    Process.kill("KILL", -pid)
+  rescue Errno::ESRCH
+  end
+  children.each do |pid|
+    Process.wait(pid)
+  rescue Errno::ECHILD
+  end
+end
+
+trap("INT") { exit 130 }
+trap("TERM") { exit 143 }
+begin
+  [3000, 5173].each do |port|
+    begin
+      TCPServer.new("127.0.0.1", port).close
+    rescue Errno::EADDRINUSE
+      abort "Port #{port} is already in use. Stop its server before running bin/dev."
+    end
+  end
+  unless File.directory?("frontend/node_modules")
+    abort "Frontend dependencies are missing. Run bin/setup once, then bin/dev."
+  end
+  unless system("bundle", "check", chdir: "backend", out: File::NULL)
+    abort "Ruby dependencies are missing. Run bin/setup once, then bin/dev."
+  end
+  unless system("bundle", "exec", "rails", "db:prepare", chdir: "backend")
+    abort "Could not prepare the local database. Check the error above."
+  end
+
+  puts "Starting Rails and React. Open http://127.0.0.1:5173"
+  puts "Press Ctrl+C to stop both servers."
+  $stdout.flush
+  children << Process.spawn("bundle", "exec", "rails", "server", "-b", "127.0.0.1", "-p", "3000", chdir: "backend", pgroup: true)
+  children << Process.spawn("npm", "run", "dev", "--", "--strictPort", chdir: "frontend", pgroup: true)
+  pid, status = Process.wait2
+  warn "A development server exited (PID #{pid}); stopping both servers."
+  exit(status.success? ? 1 : (status.exitstatus || 128 + status.termsig))
+rescue SystemCallError => error
+  warn "Could not start development servers: #{error.message}"
+  exit 1
+ensure
+  # Ignore repeat signals while cleaning up child process groups.
+  trap("INT", "IGNORE")
+  trap("TERM", "IGNORE")
+  stop_servers(children)
+end
