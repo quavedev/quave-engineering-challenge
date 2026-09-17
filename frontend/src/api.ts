@@ -1,3 +1,4 @@
+import { createDeliveryId } from './deliveryId';
 import type { Payout, StatusFilter } from './types';
 
 async function request<T>(url: string, options?: RequestInit): Promise<T> {
@@ -16,7 +17,7 @@ export const api = {
     return request(`/api/merchants/${encodeURIComponent(merchantId)}/payouts/${encodeURIComponent(payoutId)}/dispatch`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ delivery_id: crypto.randomUUID() }),
+      body: JSON.stringify({ delivery_id: createDeliveryId() }),
     });
   },
 };
