@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { usePayouts } from './usePayouts';
+import { PayoutFeePreview } from './PayoutFeePreview';
 import type { StatusFilter } from './types';
 
 export function PayoutDashboard() {
@@ -15,6 +16,10 @@ export function PayoutDashboard() {
     <label>Status <select value={status} onChange={event => setStatus(event.target.value as StatusFilter)}>
       <option value="">All</option><option value="pending">Pending</option><option value="paid">Paid</option>
     </select></label>
+    <button disabled={view.loading || !view.rows.some(row => row.status === 'pending'
+      && !view.sending.includes(row.payoutId))} onClick={() => void view.sendVisible()}>
+      Send visible pending payouts
+    </button>
     {view.error && <p role="alert">{view.error}</p>}
     {view.loading ? <p role="status">Loading payouts...</p> : <table>
       <caption>Payouts for {merchant}</caption>
@@ -27,5 +32,6 @@ export function PayoutDashboard() {
           onClick={() => void view.send(row.payoutId)}>Send payout {row.payoutId}</button></td>
       </tr>)}</tbody>
     </table>}
+    {!view.loading && <PayoutFeePreview payouts={view.rows} />}
   </main>;
 }
