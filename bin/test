@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -euo pipefail
+cd "$(dirname "$0")/.."
+(cd backend && bundle exec rails test)
+(cd frontend && npm test && npm run build)

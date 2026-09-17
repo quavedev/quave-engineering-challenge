@@ -1,0 +1,10 @@
+.bundle/
+node_modules/
+frontend/dist/
+backend/log/
+backend/tmp/
+backend/storage/*.sqlite3*
+.env
+.DS_Store
+submission.patch
+.review-tests/
