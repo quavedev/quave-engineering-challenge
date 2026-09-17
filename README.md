@@ -10,6 +10,16 @@ Browse the [open proposed implementations](https://github.com/quavedev/quave-eng
 
 Use your preferred coding agent to investigate the change, reproduce important failures, make focused fixes, and explain your verification. Keep your findings and completed solution private and return them using your invitation's instructions. Leave the proposed PR open; do not publish your answer as a review, comment, or solution PR.
 
+## Available proposals
+
+| Variant | Track | Proposed implementation |
+| --- | --- | --- |
+| M1-54 | Backend | [M1-54: Add conditional GET support to payout lists](https://github.com/quavedev/quave-engineering-challenge/pull/1) |
+| M6-34 | Frontend | [M6-34: Add proportional payout fee previews](https://github.com/quavedev/quave-engineering-challenge/pull/2) |
+| M7-19 | Frontend | [M7-19: Preview and submit visible payouts](https://github.com/quavedev/quave-engineering-challenge/pull/3) |
+
+Your invitation specifies which Backend and Frontend alternatives are offered. Complete one only.
+
 ## Setup
 
 Use Ruby 3.4.6 and Node.js 24.13.0 (see `.ruby-version` and `.nvmrc`). Dependencies and lockfiles are included; Bundler 4.0.19 was used for validation. Install Bundler with `gem install bundler -v 4.0.19` if needed. A working Ruby development toolchain is needed for gems with native extensions.
